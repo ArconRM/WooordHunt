@@ -10,24 +10,29 @@ import SwiftUI
 struct MainView: View {
     
     init() {
-        UINavigationBar.appearance().backgroundColor = myColor
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = myColor
+        
+        let attrs: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black
+        ]
+        
+        appearance.largeTitleTextAttributes = attrs
+        appearance.titleTextAttributes = attrs
+        
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var myColor = #colorLiteral(red: 0.1868668497, green: 0.316085875, blue: 0.4118339419, alpha: 1)
     
     var body: some View {
-        ZStack {
-            Color(myColor)
+        NavigationView {
+            WebView(url: URL(string: "https://wooordhunt.ru/word/welcome"))
+                .navigationTitle("WooordHunt")
                 .ignoresSafeArea()
-            NavigationView {
-                WebView(url: URL(string: "https://wooordhunt.ru/word/welcome"))
-                    .ignoresSafeArea()
-                    .statusBar(hidden: true)
-                    .navigationTitle("WooordHunt")
-            }
         }
+        .statusBar(hidden: true)
     }
 }
 
